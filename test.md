@@ -1,13 +1,16 @@
 
 # Foobar
+(大标题）
 
-Foobar is a Python library for dealing with word pluralization.
 
 ## Installation
+（小标题）
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+创建链接 [pip](https://pip.pypa.io/en/stable/)
 
 ```bash
+三个反引号（```）用于创建代码块（Code Blocks）
+
 pip install foobar
 ```
 
@@ -33,6 +36,4 @@ to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
-## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
