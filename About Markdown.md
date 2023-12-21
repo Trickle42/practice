@@ -1,39 +1,49 @@
+# 标题1
+## 标题2
+### 标题3
+#### 标题4
+##### 标题5
+###### 标题6
 
-# Foobar
-(大标题）
+**段落和换行：**
 
+使用空行来分隔段落
 
-## Installation
-（小标题）
+**强调**：
+*斜体* 或 _斜体_
+**粗体** 或 __粗体__
 
-创建链接 [pip](https://pip.pypa.io/en/stable/)
+**列表**
+1. 项目1
+2. 项目2
+3. 项目3
 
-```bash
-三个反引号（```）用于创建代码块（Code Blocks）
+**链接**
+[链接文本](http://www.example.com)
 
-pip install foobar
-```
+**图片**
+![替代文本](http://www.example.com/image.jpg)
 
-## Usage
+**引用**
+> 这是引用的文本。
 
+**代码块**
 ```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+print("Hello, World!")
 ```
+**水平线**
+---
 
-## Contributing
+**表格**
+| 列1 | 列2 | 列3 |
+| --- | --- | --- |
+| 内容1 | 内容2 | 内容3 |
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+**删除线**
+~~删除的文本~~
 
-Please make sure to update tests as appropriate.
+**注释**
+<!-- 这是注释 -->
+
 
 
