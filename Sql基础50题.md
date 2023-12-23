@@ -84,7 +84,7 @@ group by machine_id;
 1. 平均函数叫AVG
 2. ROUND(expression,number_of_decimals) 保留小数位数的函数
 3. JOIN的on条件可以直接进行筛选。
-4. 在JOIN的情况下，摘取连接键的时候必须明确是哪个表的。
+4. 在JOIN的情况下，选取连接键的时候必须明确是哪个表的。
 
 **3.2 LEFT JOIN与CROSS JOIN连用**
 
@@ -118,6 +118,8 @@ ORDER BY s.student_id, sub.subject_name;
 但INNER JOIN只返回两边条件都允许的行
 
 2. IFNULL(expression, if null value):left join后会产生null，必须修正
+3. 子查询必须要有一个别名，否则会报错
+"Every derived table must have its own alias" ，这是一个 SQL 错误消息，通常发生在查询中使用了子查询（Derived Table），但没有为子查询指定别名（Alias）。
 
 **3.3 一张表不同列相连接 INNER JOIN**
 
@@ -147,3 +149,5 @@ on Manager.Id = Report.ManagerId
 group by Manager.Id
 having count(Report.Id) >= 5
 ```
+
+**
