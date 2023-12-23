@@ -86,7 +86,7 @@ group by machine_id;
 3. JOIN的on条件可以直接进行筛选。
 4. 在JOIN的情况下，摘取连接键的时候必须明确是哪个表的。
 
-**3.2** LEFT JOIN与CROSS JOIN连用
+**3.2 LEFT JOIN与CROSS JOIN连用**
 
 学生们参加各科测试的次数
 
@@ -119,7 +119,7 @@ ORDER BY s.student_id, sub.subject_name;
 
 2. IFNULL(expression, if null value):left join后会产生null，必须修正
 
-**3.3** 一张表不同列相连接 INNER JOIN
+**3.3 一张表不同列相连接 INNER JOIN**
 
 编写一个解决方案，找出至少有五个直接下属的经理。
 
