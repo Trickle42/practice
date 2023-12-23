@@ -86,7 +86,9 @@ group by machine_id;
 3. JOIN的on条件可以直接进行筛选。
 4. 在JOIN的情况下，摘取连接键的时候必须明确是哪个表的。
 
-**3.2**
+**3.2** LEFT JOIN与CROSS JOIN连用
+
+学生们参加各科测试的次数
 
 <img width="208" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/6cc26e73-217d-49cf-a789-df63c2bf3b40">
 <img width="359" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/4a02941f-734b-4bca-ad63-188944605c98">
@@ -117,3 +119,31 @@ ORDER BY s.student_id, sub.subject_name;
 
 2. IFNULL(expression, if null value):left join后会产生null，必须修正
 
+**3.3** 一张表不同列相连接 INNER JOIN
+
+编写一个解决方案，找出至少有五个直接下属的经理。
+
+<img width="271" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/61830da3-446f-4029-bc29-7cb0bdebe73a">
+
+**注意点**
+
+0. 需要一步步进行拆解
+1. 找到每一个经理的下属员工数量进行罗列,需要分立两个表，通过JOIN（INNER JOIN）操作，回
+```sql
+select Manager.Name, count(Report.Id) as cnt
+from
+Employee as Manager join Employee as Report
+on Manager.Id = Report.ManagerId # 会复制manager.ID以其在managerID出现的次数
+group by Manager.Id
+```
+<img width="461" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/6dd4564e-c0e5-4f05-b0ec-650b586c3f70">
+
+2. Having 子句操作进行操作
+```sql
+select Manager.Name
+from
+Employee as Manager join Employee as Report
+on Manager.Id = Report.ManagerId
+group by Manager.Id
+having count(Report.Id) >= 5
+```
