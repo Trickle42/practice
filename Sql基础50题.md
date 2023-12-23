@@ -56,3 +56,63 @@ where temperature > last_temperature and datediff(recordDate, last_date) = 1
 > 
 > default: 可选参数，如果指定的偏移行不存在（例如，对于第一行），则使用此默认值。
 
+
+## 12.22
+**3.1**
+> 自己的做法
+```sql
+SELECT a.machine_id, ROUND(AVG(b.timestamp-a.timestamp),3) AS processing_time
+FROM (SELECT *  FROM Activity WHERE activity_type = 'start') AS a
+LEFT JOIN (SELECT *  FROM Activity WHERE activity_type = 'end')AS b
+on a.machine_id = b.machine_id AND a.process_id = b.process_id
+GROUP BY a.machine_id ORDER BY a.machine_id desc;
+```
+
+> 更好的做法
+```sql
+select 
+a1.machine_id,#在JOIN的情况下，摘取连接键的时候必须明确是哪个表的。
+round(avg(a2.timestamp -a1.timestamp ),3) as processing_time 
+from  Activity as a1 left join Activity as a2 on 
+a1.machine_id=a2.machine_id and 
+a1.process_id=a2.process_id and 
+a1.activity_type ='start' and 
+a2.activity_type ='end' 
+group by machine_id;
+```
+**注意点**
+1. 平均函数叫AVG
+2. ROUND(expression,number_of_decimals) 保留小数位数的函数
+3. JOIN的on条件可以直接进行筛选。
+4. 在JOIN的情况下，摘取连接键的时候必须明确是哪个表的。
+
+**3.2**
+
+<img width="208" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/6cc26e73-217d-49cf-a789-df63c2bf3b40">
+<img width="359" alt="image" src="https://github.com/Trickle42/practice/assets/67224782/4a02941f-734b-4bca-ad63-188944605c98">
+
+```sql
+SELECT 
+    s.student_id, s.student_name, sub.subject_name, IFNULL(grouped.attended_exams, 0) AS attended_exams
+FROM 
+    Students s
+CROSS JOIN 
+    Subjects sub
+LEFT JOIN (
+    SELECT student_id, subject_name, COUNT(*) AS attended_exams
+    FROM Examinations
+    GROUP BY student_id, subject_name
+) grouped 
+ON s.student_id = grouped.student_id AND sub.subject_name = grouped.subject_name
+ORDER BY s.student_id, sub.subject_name;
+```
+
+**注意点**
+0.问题是如何产生并处理null值。必须用到left join，因为cross和inner都不产生。
+1. LEFT join 和 INNER JOIN的区别 ： LEFT JOIN 返回左表中的所有行，以及右表中连接条件匹配的行。
+如果连接条件在右表中没有匹配的行，那么将在结果中显示右表的列，但其他部分将包含NULL。
+
+但INNER JOIN只返回两边条件都允许的行
+
+2. IFNULL(expression, if null value):left join后会产生null，必须修正
+
