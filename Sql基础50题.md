@@ -108,6 +108,7 @@ ORDER BY s.student_id, sub.subject_name;
 ```
 
 **注意点**
+
 0.问题是如何产生并处理null值。必须用到left join，因为cross和inner都不产生。
 1. LEFT join 和 INNER JOIN的区别 ： LEFT JOIN 返回左表中的所有行，以及右表中连接条件匹配的行。
 如果连接条件在右表中没有匹配的行，那么将在结果中显示右表的列，但其他部分将包含NULL。
