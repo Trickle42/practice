@@ -151,3 +151,17 @@ having count(Report.Id) >= 5
 ```
 
 **
+## 12.31
+**4.1**
+> Register a
+inner join
+(select count(distinct user_id) as fenmu from Users)b on 1=1
+
+这里的 1=1 是一个始终为真的条件，它实际上是一个占位符。在一些动态生成SQL语句的情况下，它可以作为条件的起点。在这个查询中，它意味着对主查询的每一行都与子查询的每一行进行连接，因为无论什么时候，1总是等于1
+
+因为count(distinct user_id)只有一个数据，所以可以依次全部连接
+
+>  ROUND(SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END) / COUNT(*) * 100, 2) AS poor_query_percentage
+>  round(avg(rating<3)*100,2) as poor_query_percentage
+
+两者等价，用逻辑表达式做虚拟变量求和更为方便。
