@@ -165,3 +165,43 @@ inner join
 >  round(avg(rating<3)*100,2) as poor_query_percentage
 
 两者等价，用逻辑表达式做虚拟变量求和更为方便。
+
+## 1.2
+> DATE_FORMAT(trans_date, '%Y-%m') AS month
+> 
+> 2018-12-18 -> 2018-12
+
+DATE_FORMAT(date, format) ：用于以不同的格式显示日期/时间数据。date 参数是合法的日期，format 规定日期/时间的输出格式。
+
+> 找到每一个客户的首个订单的信息
+```sql
+where (customer_id, order_date) in (
+    select customer_id, min(order_date)
+    from delivery
+    group by customer_id)
+```
+要求顾客id和订单日期同时对应，以防遇到某一订单日期对于不同顾客可能是首次，或是非首次的情况。
+
+where in+ 聚合函数的用法值得借鉴
+
+> 报告在首次登录的第二天再次登录的玩家的 比率
+```sql
+select IFNULL(round(count(distinct(Result.player_id)) / count(distinct(Activity.player_id)), 2), 0) as fraction
+from (
+  select Activity.player_id as player_id
+  from (
+    select player_id, DATE_ADD(MIN(event_date), INTERVAL 1 DAY) as second_date
+    from Activity
+    group by player_id
+  ) as Expected INNER JOIN Activity
+  where Activity.event_date = Expected.second_date and Activity.player_id = Expected.player_id
+) as Result CROSS JOIN Activity
+```
+> DATE_ADD(date, INTERVAL value unit)
+> 
+> -- 在当前日期上增加 3 天
+SELECT DATE_ADD(CURDATE(), INTERVAL 3 DAY) AS new_date;
+> CROSS JOIN方便运算两张不同表的数据
+
+
+
