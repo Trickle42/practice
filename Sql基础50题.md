@@ -209,4 +209,14 @@ SELECT DATE_ADD(CURDATE(), INTERVAL 3 DAY) AS new_date;
 >
 > HAVING datediff('2019-07-27', activity_date) between 0 and 29
 
+>  查询仅在2019年春季出现的数据，即如果在其他时间也出现，则不会被筛选
+> 
+>  HAVING MIN(sale_date) >= '2019-01-01' AND MAX(sale_date) <= '2019-03-31'
+>
+>  having count(sale_date between '2019-01-01' and '2019-03-31' or null) = count(*)
+
+
+
+
+
 
