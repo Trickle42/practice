@@ -203,5 +203,10 @@ from (
 SELECT DATE_ADD(CURDATE(), INTERVAL 3 DAY) AS new_date;
 > CROSS JOIN方便运算两张不同表的数据
 
+>  查询最近30日的信息
+>
+> HAVING activity_date BETWEEN DATE_ADD('2019-07-27',INTERVAL -29 day) and '2019-07-27';
+>
+> HAVING datediff('2019-07-27', activity_date) between 0 and 29
 
 
