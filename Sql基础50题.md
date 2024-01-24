@@ -215,6 +215,14 @@ SELECT DATE_ADD(CURDATE(), INTERVAL 3 DAY) AS new_date;
 >
 >  having count(sale_date between '2019-01-01' and '2019-03-31' or null) = count(*)
 
+>  JOIN的妙用，自连接，在遇到两列的值有相同的地方，同时又要根据两列做不同的筛选时
+```sql
+select a.employee_id as 'employee_id', a.name as 'name', count(b.employee_id) as 'reports_count', round(avg(b.age), 0) as 'average_age'
+from Employees a inner join Employees b
+on a.employee_id = b.reports_to
+group by a.employee_id
+order by a.employee_id
+```
 
 
 
