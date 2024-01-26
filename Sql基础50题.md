@@ -225,6 +225,29 @@ order by a.employee_id
 ```
 
 
+## 1.26
 
+**数字连续三次出现**
 
+1. 运用自连接
+```sql
+SELECT distinct l1.num AS ConsecutiveNums 
+FROM
+Logs l1 INNER JOIN
+Logs l2 ON l1.id = l2.id-1 INNER JOIN
+Logs l3 ON l2.id = l3.id-1
+WHERE l1.Num = l2.Num
+    AND l2.Num = l3.Num
+```
 
+2. 运用lead和lag窗口函数构建子查询
+```sql
+SELECT distinct Num AS ConsecutiveNums
+FROM (
+    SELECT id, Num,
+           LEAD(Num) OVER (ORDER BY id) AS nextNum,
+           LAG(Num) OVER (ORDER BY id) AS prevNum
+    FROM Logs
+) AS subquery
+WHERE Num = prevNum AND Num = nextNum;
+```
