@@ -251,3 +251,33 @@ FROM (
 ) AS subquery
 WHERE Num = prevNum AND Num = nextNum;
 ```
+3. UNION ALL 在分类汇总中的妙用&SUM+条件语句可以快捷筛选符合条件的数量
+
+场景： 查询每个工资类别的银行账户数量。 工资类别如下：
+
+"Low Salary"：所有工资 严格低于 20000 美元。
+
+"Average Salary"： 包含 范围内的所有工资 [$20000, $50000] 。
+
+"High Salary"：所有工资 严格大于 50000 美元。
+
+结果表 必须 包含所有三个类别。 如果某个类别中没有帐户，则报告 0 。
+
+分析： 如果单纯用CASE WHEN + COUNT，则如果没有筛选到某个类别，则不满足需求要求返回0，可以用UNION进行连接
+
+```sql
+SELECT 
+    'Low Salary' AS category, 
+    SUM(income < 20000) AS accounts_count
+FROM Accounts
+UNION ALL
+SELECT 
+    'Average Salary' AS category, 
+    SUM(income BETWEEN 20000 AND 50000) AS accounts_count
+FROM Accounts
+UNION ALL
+SELECT 
+    'High Salary' AS category, 
+    SUM(income > 50000) AS accounts_count
+FROM Accounts;
+```
